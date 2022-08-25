@@ -19,12 +19,21 @@ public class Queue<V> {
         // TODO-Lab2.6: Implement the logic below
         // pseudo code
         //    create new node from item, null previous and next
-        //    if head is null:
-        //        point head and tail at new node
+        DblLinkedListNode<V> node = new DblLinkedListNode<>(item, null, null);
+        // if head is null:
+        if(head == null) {
+            // point head and tail at new node
+            head = node;
+        }
         //    else:
-        //        set tail next to new node
-        //        set new node's previous to tail
-        //        set tail to new node
+        else {
+            //        set tail next to new node
+            //        set new node's previous to tail
+            //        set tail to new node
+            tail.setNext(node);
+            node.setPrevious(tail);
+        }
+        tail = node;
     }
 
     public V dequeue() {
@@ -33,12 +42,23 @@ public class Queue<V> {
         // pseudo code
         //    1. if head is null
         //          return null
+        if(head == null){
+            return null;
+        }
+        V value = null;
         //    2. node = the node head is pointing at
+        value = head.getValue();
         //    3. head = head.next
+        DblLinkedListNode<V> node = head;
+        value = node.getValue();
+        head = head.getNext();
+        if(head != null){
+            head.setPrevious(null);
+        }
         //    4. if head is not null:
         //            set head previous to null
         //    5. return node.value
-        return null;
+        return value;
     }
 
     public static void main(String[] args) {

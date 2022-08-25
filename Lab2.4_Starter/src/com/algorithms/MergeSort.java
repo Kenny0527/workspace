@@ -1,9 +1,15 @@
 package com.algorithms;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 public class MergeSort {
 
     public void mergeSort(int[] array) {
         // TODO-Lab2.4: delegate to private mergeSort.  Follow example in QuickSort
+        if(array != null){
+            mergeSort(array, 0, array.length - 1);
+        }
 
     }
 
@@ -16,6 +22,13 @@ public class MergeSort {
         //       mergeSort(array, start, middle)
         //       mergeSort(array, middle+1, end)
         //       merge(array, start, middle, end)
+        if(start < end){
+            int middle  = (end - start) / 2 + start;
+            mergeSort(array, start, middle);
+            mergeSort(array, middle + 1, end);
+            merge(array, start, middle, end);
+
+        }
 
     }
 
@@ -34,9 +47,22 @@ public class MergeSort {
         //                  arrayTemp[k] = array[j]
         //                  j++
         //        copyArray(arrayTemp, array, start)
+        int i = start;
+        int j = middle + 1;
+        int[] tempArray = new int[(end - start) + 1];
+        for(int k = 0; k < tempArray.length; k++){
+            if(i <= middle && (j > end || array[i] <= array[j])){
+                tempArray[k] = array[i];
+                i++;
+            }else{
+                tempArray[k] = array[j];
+                j++;
+            }
+        }
+        System.arraycopy(tempArray, 0, array, start, tempArray.length);
     }
 
-    public static void main(String[] arge) {
+    public static void main(String[] args) {
         MergeSort sorter = new MergeSort();
         int[] array = new int[]{4, 5, 33, 17, 3, 21, 1, 16};
         System.out.println("Unsorted:");
